@@ -9,7 +9,7 @@ export FLASK_APP=views.py
 
 python -m flask run
 
-# setup music dir
+## setup music dir
 
 from IOT-MARKERSLAB DIR:
 
