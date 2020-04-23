@@ -1,8 +1,10 @@
 # STANDARD IMPORTS
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
 
 import os
+import pygame
+
 app = Flask(__name__)
 
 # DIR TO SAVE IMAGES
@@ -10,6 +12,11 @@ app.config["MUSIC_UPLOADS"] = "/Users/arilybaert/Documents/gdm2/semester2/IOT-Ma
 app.config["ALLOWED_MUSIC_EXTENSIONS"] = ["MP3"]
 app.config["ALLOWED_MUSIC_FILESIZE"] = 7496776
 
+#
+# FUNCTIONS
+#
+
+# CHECK EXTENSIONS
 def allowed_music(filename):
     if not "." in filename:
         return False
@@ -21,11 +28,22 @@ def allowed_music(filename):
     else:
         return False
 
+# CHECK FILESIZE
 def allowed_image_filesize(filesize):
     if int(filesize) <= app.config["ALLOWED_MUSIC_FILESIZE"]:
         return True
     else:
         return False
+
+# PLAY MUSIC
+def play_music(file):
+    pygame.mixer.init()
+    pygame.mixer.music.load("static/music/upload/%s" (file))
+    pygame.mixer.music.play()
+    while pygame.mixer.music.get_busy() == True:
+        continue
+
+
 #
 # ROUTES:
 #
@@ -35,8 +53,8 @@ def allowed_image_filesize(filesize):
 @app.route('/home')
 def viewHome():
     filenames = os.listdir(app.config["MUSIC_UPLOADS"])
-    for filename in filenames:
-        print(filename)
+    # for filename in filenames:
+    #     print(filename)
     return render_template("home.html", filenames= filenames);
 
 
@@ -75,3 +93,14 @@ def upload_music():
 
     # VIEW UPLOAD PAGE
     return render_template("upload.html");
+
+@app.route('/play', methods=["GET", "POST"])
+def play_song():
+    if request.method == 'POST':
+        print(request.form['musicfilename'])
+        play_music(request.form['musicfilename'])
+    
+    #TO DO: MAKE MEDIA PLAYER
+    filenames = os.listdir(app.config["MUSIC_UPLOADS"])
+
+    return render_template("home.html", filenames= filenames);

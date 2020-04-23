@@ -12,10 +12,19 @@
         <ul>
             <!-- LOOP OVER DIR AND DISPLAY IT'S CONTENT -->
             {% for filename in filenames %}
-            <li>{{filename}}</li>
+            <li>
+                <form action="/play" method="POST" >
+                    <button type="submit" class="btn btn-primary">{{filename}}</button>
+                    <input type="hidden" id="musicfilename" name="musicfilename" value={{filename}}>
+                </form>
+            </li>
+
             {% endfor %}
         </ul>
 
     </div>
 
+    {% endblock %}
+
+    {% block script %}
     {% endblock %}
