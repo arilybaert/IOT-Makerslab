@@ -26,12 +26,18 @@ def allowed_image_filesize(filesize):
         return True
     else:
         return False
+#
+# ROUTES:
+#
 
 # HOME ROUTE
 @app.route('/')
 @app.route('/home')
 def viewHome():
-    return render_template("home.html");
+    filenames = os.listdir(app.config["MUSIC_UPLOADS"])
+    for filename in filenames:
+        print(filename)
+    return render_template("home.html", filenames= filenames);
 
 
 # UPLOAD ROUTE
