@@ -38,7 +38,7 @@ def allowed_image_filesize(filesize):
 # PLAY MUSIC
 def play_music(file):
     pygame.mixer.init()
-    pygame.mixer.music.load("/home/pi/Documents/IOT-Makerslab/app/static/music/uploads/" + file)
+    pygame.mixer.music.load(app.config["MUSIC_UPLOADS"] + file)
     pygame.mixer.music.play()
     while pygame.mixer.music.get_busy() == True:
         continue

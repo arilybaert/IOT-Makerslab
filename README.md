@@ -1,13 +1,11 @@
 # IOT-Makerslab
 Eindproject Internet of Things
 
-## commands 
+## commands on PI
 
-. venv/bin/activate
+cd app
 
-export FLASK_APP=views.py
-
-python -m flask run
+python3 run
 
 ## setup music dir
 
