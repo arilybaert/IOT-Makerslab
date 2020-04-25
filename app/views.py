@@ -4,6 +4,7 @@ from werkzeug.utils import secure_filename
 
 import os
 import pygame
+import json
 
 app = Flask(__name__)
 
@@ -63,32 +64,47 @@ def upload_music():
 
     if request.method == 'POST':
 
-        if request.files:
+        print(request.form['songTitle'])
+        print(request.form['songArtist'])
+        print(request.form['songArtwork'])
+        with open('static/music/metadata.txt') as json_file:
+            data = json.load(json_file)
 
-            if not allowed_image_filesize(request.cookies.get("filesize")):
-                print("file exceeded max size")
-                return redirect(request.url)
+        data['music'].append({
+            'title': request.form['songTitle'],
+            'artist': request.form['songArtist'],
+            'artwork': request.form['songArtwork'],
+        })
+        with open('static/music/metadata.txt', 'w') as outfile:
+            json.dump(data, outfile)
+        
+        return redirect(request.url)
+        
+        # if request.files:
+        #     if not allowed_image_filesize(request.cookies.get("filesize")):
+        #         print("file exceeded max size")
+        #         return redirect(request.url)
 
-            music = request.files["music"]
+        #     music = request.files["music"]
 
-            # FILE MUST CONTAIN NAME
-            if music.filename == "":
-                print("file needs filename")
-                return redirect(request.url)
+        #     # FILE MUST CONTAIN NAME
+        #     if music.filename == "":
+        #         print("file needs filename")
+        #         return redirect(request.url)
             
-            # FILE MUST HAVE RIGHT EXTENSION
-            if not allowed_music(music.filename):
-                print("file extension is not allowed")
-                return redirect(request.url)
-            else:
-                filename = secure_filename(music.filename)
+        #     # FILE MUST HAVE RIGHT EXTENSION
+        #     if not allowed_music(music.filename):
+        #         print("file extension is not allowed")
+        #         return redirect(request.url)
+        #     else:
+        #         filename = secure_filename(music.filename)
             
-            # SAVE FILE TO HDD
-            music.save(os.path.join(app.config["MUSIC_UPLOADS"], filename))
+        #     # SAVE FILE TO HDD
+        #     music.save(os.path.join(app.config["MUSIC_UPLOADS"], filename))
             
-            print("TUNE IS SAVED BRO")
+        #     print("TUNE IS SAVED BRO")
 
-            return redirect(request.url)
+        #    return redirect(request.url)
 
     # VIEW UPLOAD PAGE
     return render_template("upload.html");
@@ -96,7 +112,7 @@ def upload_music():
 @app.route('/play', methods=["GET", "POST"])
 def play_song():
     if request.method == 'POST':
-        #print("static/music/upload/" + request.form['musicfilename'])
+        
         play_music(request.form['musicfilename'])
     
         
