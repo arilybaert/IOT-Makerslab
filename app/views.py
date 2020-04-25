@@ -8,7 +8,7 @@ import pygame
 app = Flask(__name__)
 
 # DIR TO SAVE IMAGES
-app.config["MUSIC_UPLOADS"] = "/Users/arilybaert/Documents/gdm2/semester2/IOT-MakersLab/app/static/music/uploads"
+app.config["MUSIC_UPLOADS"] = "/home/pi/Documents/IOT-Makerslab/app/static/music/uploads"
 app.config["ALLOWED_MUSIC_EXTENSIONS"] = ["MP3"]
 app.config["ALLOWED_MUSIC_FILESIZE"] = 7496776
 
@@ -38,7 +38,7 @@ def allowed_image_filesize(filesize):
 # PLAY MUSIC
 def play_music(file):
     pygame.mixer.init()
-    pygame.mixer.music.load("static/music/upload/%s" (file))
+    pygame.mixer.music.load("/home/pi/Documents/IOT-Makerslab/app/static/music/uploads/" + file)
     pygame.mixer.music.play()
     while pygame.mixer.music.get_busy() == True:
         continue
@@ -56,7 +56,6 @@ def viewHome():
     # for filename in filenames:
     #     print(filename)
     return render_template("home.html", filenames= filenames);
-
 
 # UPLOAD ROUTE
 @app.route('/upload', methods=["GET", "POST"])
@@ -97,10 +96,16 @@ def upload_music():
 @app.route('/play', methods=["GET", "POST"])
 def play_song():
     if request.method == 'POST':
-        print(request.form['musicfilename'])
+        #print("static/music/upload/" + request.form['musicfilename'])
         play_music(request.form['musicfilename'])
     
+        
     #TO DO: MAKE MEDIA PLAYER
     filenames = os.listdir(app.config["MUSIC_UPLOADS"])
 
     return render_template("home.html", filenames= filenames);
+
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0')
+
