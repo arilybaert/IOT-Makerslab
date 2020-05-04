@@ -9,18 +9,40 @@
                 <hr>
             </div>
         </div>
-        <ul>
-            <!-- LOOP OVER DIR AND DISPLAY IT'S CONTENT -->
+        <div class="card-deck">
+
+        
+            
+            <!-- LOOP OVER MUSIC DIR -->
             {% for filename in filenames %}
-            <li>
-                <form action="/play" method="POST" >
-                    <button type="submit" class="btn btn-primary">{{filename}}</button>
-                    <input type="hidden" id="musicfilename" name="musicfilename" value={{filename}}>
-                </form>
-            </li>
+            <!-- LOOP OVER METADATA -->
+                {% for song in metadata.music %}
+                    {% if(song.id == filename[:-4]) %}
+                        <!-- <li>
+                            <form action="/play" method="POST" >
+                                <button type="submit" class="btn btn-primary">{{song.title}}</button>
+                                <input type="hidden" id="musicfilename" name="musicfilename" value={{filename}}>
+                            </form>
+                        </li> -->
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="{{song.artwork}}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">{{song.title}}</h5>
+                                <form action="/play" method="POST" >
+                                
+                                    <input type="hidden" id="musicfilename" name="musicfilename" value={{filename}}>
+                                    <button type="submit" class="btn btn-primary">Play</button>
+                                </form>
+                              
+                            </div>
+                          </div>
+                    {% endif %}
+                {% endfor %}
+            
 
             {% endfor %}
-        </ul>
+        </div>
+        
 
     </div>
 

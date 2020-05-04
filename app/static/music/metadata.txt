@@ -1,1 +1,0 @@
-{"music": [{"title": "Five to One", "artist": "The Doors", "artwork": "https://lastfm.freetls.fastly.net/i/u/770x0/24590e4ca3a94c748d6c8452ce52467b.jpg"}, {"title": "L.A. Woman", "artist": "The Doors", "artwork": "https://upload.wikimedia.org/wikipedia/en/4/41/The_Doors_-_L.A._Woman.jpg"}]}
