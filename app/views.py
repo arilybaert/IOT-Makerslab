@@ -44,8 +44,8 @@ def allowed_image_filesize(filesize):
 def play_music(file):
     pygame.mixer.music.load(app.config["MUSIC_UPLOADS"] + file)
     pygame.mixer.music.play()
-    while pygame.mixer.music.get_busy() == True:
-        continue
+    # while pygame.mixer.music.get_busy() == True:
+    #     continue
 def pause_music():   
     pygame.mixer.pause()
 
@@ -108,7 +108,7 @@ def upload_music():
                 print(filename)
             
             # SAVE FILE TO HDD
-            music.save(os.path.join(app.config["MUSIC_UPLOADS"], filename))
+            music.save(os.path.join(app.config["MUSIC_UPLOADS"], filename, ))
             
             print("TUNE IS SAVED BRO")
 
@@ -119,15 +119,18 @@ def upload_music():
 
 @app.route('/play', methods=["GET", "POST"])
 def play_song():
+    print("busy: " + str(pygame.mixer.music.get_busy()))
     if request.method == 'POST':
-        
-        play_music(request.form['musicfilename'])
-    
-        
-    #TO DO: MAKE MEDIA PLAYER
-    filenames = os.listdir(app.config["MUSIC_UPLOADS"])
+        if pygame.mixer.music.get_busy() == 1:
+            pygame.mixer.music.queue(app.config["MUSIC_UPLOADS"] + request.form['musicfilename'])
+        else:
+            play_music(request.form['musicfilename'])
 
-    return render_template("home.html", filenames= filenames);
+        
+    filenames = os.listdir(app.config["MUSIC_UPLOADS"])
+    with open(app.config["MUSIC_METADATA"]) as json_file:
+            data = json.load(json_file)
+    return render_template("home.html", filenames= filenames, metadata= data);
 
 @app.route('/pause')
 def pause():
