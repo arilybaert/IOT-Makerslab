@@ -8,8 +8,10 @@ import json
 import uuid 
 
 app = Flask(__name__)
+pygame.mixer.init()
 
-# DIR TO SAVE IMAGES
+
+# CONSTS
 app.config["MUSIC_UPLOADS"] = "/home/pi/Documents/IOT-Makerslab/app/static/music/uploads/"
 app.config["MUSIC_METADATA"] = "static/music/metadata/metadata.txt"
 app.config["ALLOWED_MUSIC_EXTENSIONS"] = ["MP3"]
@@ -40,12 +42,12 @@ def allowed_image_filesize(filesize):
 
 # PLAY MUSIC
 def play_music(file):
-    pygame.mixer.init()
     pygame.mixer.music.load(app.config["MUSIC_UPLOADS"] + file)
     pygame.mixer.music.play()
     while pygame.mixer.music.get_busy() == True:
         continue
-
+def pause_music():   
+    pygame.mixer.pause()
 
 #
 # ROUTES:
@@ -127,7 +129,23 @@ def play_song():
 
     return render_template("home.html", filenames= filenames);
 
+@app.route('/pause')
+def pause():
+    pygame.mixer.music.pause()
+    
+    filenames = os.listdir(app.config["MUSIC_UPLOADS"])
+    with open(app.config["MUSIC_METADATA"]) as json_file:
+            data = json.load(json_file)
+    return render_template("home.html", filenames= filenames, metadata= data);
 
+@app.route('/unpause')
+def unpause():
+    pygame.mixer.music.unpause()
+    
+    filenames = os.listdir(app.config["MUSIC_UPLOADS"])
+    with open(app.config["MUSIC_METADATA"]) as json_file:
+            data = json.load(json_file)
+    return render_template("home.html", filenames= filenames, metadata= data);
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
 
