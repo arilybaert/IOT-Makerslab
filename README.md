@@ -5,7 +5,7 @@ Eindproject Internet of Things
 
 cd app
 
-python3 run
+python3 views.py
 
 ## setup music dir
 
