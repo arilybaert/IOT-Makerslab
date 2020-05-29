@@ -128,6 +128,7 @@ De inspiratie voor ons project was een gewone jukebox.
 
 # Development
 
+![alt_text](images/IOT-Makerslab2.png "image_tooltip")
  
 
 Deze functies zorgen ervoor dat je de Sensehat op de Raspberry kan bedienen. Zo kan je gebruik maken van de Joystick die aanwezig is. De ‘boven en onder’ toetsen zorgen ervoor dat je het volume kan regelen
