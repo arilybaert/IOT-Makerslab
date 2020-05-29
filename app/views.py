@@ -3,6 +3,9 @@ from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from js.jquery import jquery
 from classes.player import Player
+from sense_hat import SenseHat, ACTION_PRESSED, ACTION_HELD, ACTION_RELEASED
+
+
 import cgi, cgitb
 import os
 import pygame
@@ -14,7 +17,23 @@ jquery.need()
 app = Flask(__name__)
 pygame.mixer.init()
 
+sense = SenseHat()
+
 PyPlayer = Player()
+
+
+
+def pushed_up(event):
+    if event.action != ACTION_RELEASED:
+    	PyPlayer.stop_music()
+def pushed_down(event):
+    if event.action != ACTION_RELEASED:
+    	PyPlayer.start_music()
+
+sense.stick.direction_up = pushed_up
+sense.stick.direction_down = pushed_down
+
+
 
 # CONSTS
 app.config["MUSIC_UPLOADS"] = "/home/pi/Documents/IOT-Makerslab/app/static/music/uploads/"
