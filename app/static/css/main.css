@@ -1,0 +1,61 @@
+
+.button {
+	background-color: grey; 
+	border: none;
+	color: white;
+	padding: 10px 20px 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+}
+.card{
+	background-color: #2c2c2c;
+	color: whitesmoke;
+}
+
+.card-body{
+	text-align: center;
+}
+body {
+	background-color: #121212;
+}
+
+nav{
+	background-color: #1f1f1f;
+	color: whitesmoke;
+}
+nav a{
+	color: whitesmoke
+}
+
+nav a:hover{
+	color: grey;
+}
+
+.text-form{
+	color: whitesmoke;
+}
+
+h1{
+	color: whitesmoke;
+	padding-top: 30px;
+}
+
+.slidecontainer{
+	padding: 0px 20px;
+	vertical-align: center;
+}
+
+.button-pause{
+	margin-left: 5px;
+}
+
+.button-color{
+	background-color: #515151;
+}
+
+.color-toolbar{
+	background-color: #383838;
+	border: none;
+}

@@ -22,23 +22,23 @@
             <form action="/upload" method="POST" enctype="multipart/form-data">
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                      <label for="songTitle">Title</label>
+                      <label for="songTitle" class="text-form">Title</label>
                       <input type="text" name="songTitle" class="form-control" id="songTitle" placeholder="Title">
                     </div>
                     <div class="form-group col-md-6">
-                      <label for="songArtist">Artist</label>
+                      <label for="songArtist" class="text-form">Artist</label>
                       <input type="text" class="form-control" id="songArtist" name="songArtist" placeholder="Artist">
                     </div>
                 </div>
                 <div class="form-group">
-                  <label for="songArtwork">Link album artwork</label>
+                  <label for="songArtwork" class="text-form">Link album artwork</label>
                   <input type="text" name="songArtwork" id="songArtwork" class="form-control">
                 </div>
                   <div class="form-group">
-                    <label for="music">Select your tune ...</label>
+                    <label class="text-form" for="music">Select your tune ...</label>
                     <input oninput="filesize(this);" type="file" name="music" id="music" class="form-control">
                   </div>
-                <button type="submit" class="btn btn-primary">Upload tune</button>
+                <button type="submit" class="btn btn-primary button">Upload tune</button>
             </form>
 
             </div>
