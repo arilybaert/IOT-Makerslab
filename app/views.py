@@ -1,15 +1,16 @@
 # STANDARD IMPORTS
 from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
-
+from js.jquery import jquery
 from classes.player import Player
-
-
+import cgi, cgitb
 import os
 import pygame
 import json
 import uuid 
+import unicodedata
 
+jquery.need()
 app = Flask(__name__)
 pygame.mixer.init()
 
@@ -44,14 +45,6 @@ def allowed_image_filesize(filesize):
     else:
         return False
 
-# PLAY MUSIC
-def play_music(file):
-    pygame.mixer.music.load(app.config["MUSIC_UPLOADS"] + file)
-    pygame.mixer.music.play()
-    # while pygame.mixer.music.get_busy() == True:
-    #     continue
-def pause_music():   
-    pygame.mixer.pause()
 
 #
 # ROUTES:
@@ -127,17 +120,6 @@ def play_song():
     if request.method == 'POST':
         PyPlayer.start_next_song(app.config["MUSIC_UPLOADS"] + request.form['musicfilename'])
 
-    #     if pygame.mixer.music.get_busy() == 1:
-    #         pygame.mixer.music.set_endevent()
-    #         pygame.mixer.music.load(app.config["MUSIC_UPLOADS"] + request.form['musicfilename'])
-    #         pygame.mixer.music.play()
-    #         # set an endevent to catch it
-    #         #pygame.mixer.music.set_endevent(SONG_END)
-    #         #pygame.mixer.music.queue(app.config["MUSIC_UPLOADS"] + request.form['musicfilename'])
-    #     else:
-    #         play_music(request.form['musicfilename'])
-    #         #pygame.mixer.music.set_endevent()
-
         
     filenames = os.listdir(app.config["MUSIC_UPLOADS"])
     with open(app.config["MUSIC_METADATA"]) as json_file:
@@ -147,7 +129,6 @@ def play_song():
 @app.route('/pause')
 def pause():
     PyPlayer.stop_music()
-    #pygame.mixer.music.pause()
     
     filenames = os.listdir(app.config["MUSIC_UPLOADS"])
     with open(app.config["MUSIC_METADATA"]) as json_file:
@@ -157,22 +138,28 @@ def pause():
 @app.route('/unpause')
 def unpause():
     PyPlayer.start_music()
-    #pygame.mixer.music.unpause()
     
     filenames = os.listdir(app.config["MUSIC_UPLOADS"])
     with open(app.config["MUSIC_METADATA"]) as json_file:
             data = json.load(json_file)
     return render_template("home.html", filenames= filenames, metadata= data);
 
-
-
-@app.route('/volume')
+@app.route('/volume', methods=["GET", "POST"])
 def volume():
+    #data = cgi.FieldStorage()
+    print('test')
+
     if request.method == 'POST':
-        print(request.method)
+        volume = request.form["volume"]
+        volume = int(volume)
+
+        PyPlayer.set_volume(volume)
 
 
-
+    filenames = os.listdir(app.config["MUSIC_UPLOADS"])
+    with open(app.config["MUSIC_METADATA"]) as json_file:
+            data = json.load(json_file)
+    return render_template("home.html", filenames= filenames, metadata= data);
 
 
 

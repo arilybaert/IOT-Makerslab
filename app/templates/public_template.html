@@ -31,6 +31,7 @@
       <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     {% block main %}    {% endblock %}
 
      <div class="fixed-bottom">
@@ -61,7 +62,8 @@
 
             <form action="/volume" method="POST">
               <div class="slidecontainer">
-                <input type="range" min="1" max="100" value="50" class="slider" id="myRange" name="volume">
+                <input type="range" min="1" max="100" value="50" class="slider" id="volume" name="volume">
+
               </div>
             </form>
           </div>
@@ -71,7 +73,28 @@
         </div>
       </div>
      </div> 
+     <script type="text/javascript">
+                $("#volume").change(function(){
+                  var volume = $("#volume").val();
+                  //alert("The volume has been set to: " + volume);
+                  //var value = JSON.stringify(volume);
+                  // $.post("/volume", value)
+                  // .done(function() {})
+                  // .fail(function() { alert("error"); })
 
+                  $.ajax({
+                            type: 'post',
+                            url: "/volume",
+                            data: {'volume':volume},
+                            async: false,
+                            success: function (response) {
+                                console.log(response);
+                            }
+                        }).done(function (data) {
+                            console.log(data);
+                        });
+                })
+     </script>
     {% block script %} {% endblock %}
 </body>
 </html>
