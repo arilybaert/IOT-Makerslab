@@ -5,7 +5,6 @@ from js.jquery import jquery
 from classes.player import Player
 from sense_hat import SenseHat, ACTION_PRESSED, ACTION_HELD, ACTION_RELEASED
 
-
 import cgi, cgitb
 import os
 import pygame
@@ -13,13 +12,12 @@ import json
 import uuid 
 import unicodedata
 
-jquery.need()
 app = Flask(__name__)
-pygame.mixer.init()
-
 sense = SenseHat()
-
 PyPlayer = Player()
+
+jquery.need()
+sense.clear()
 
 
 
@@ -78,6 +76,7 @@ def viewHome():
             data = json.load(json_file)
     return render_template("home.html", filenames= filenames, metadata= data);
 
+
 # UPLOAD ROUTE
 @app.route('/upload', methods=["GET", "POST"])
 def upload_music():
@@ -133,6 +132,7 @@ def upload_music():
     # VIEW UPLOAD PAGE
     return render_template("upload.html");
 
+
 @app.route('/play', methods=["GET", "POST"])
 def play_song():
     # print("busy: " + str(pygame.mixer.music.get_busy()))
@@ -145,6 +145,7 @@ def play_song():
             data = json.load(json_file)
     return render_template("home.html", filenames= filenames, metadata= data);
 
+
 @app.route('/pause')
 def pause():
     PyPlayer.stop_music()
@@ -153,6 +154,7 @@ def pause():
     with open(app.config["MUSIC_METADATA"]) as json_file:
             data = json.load(json_file)
     return render_template("home.html", filenames= filenames, metadata= data);
+
 
 @app.route('/unpause')
 def unpause():
@@ -163,10 +165,9 @@ def unpause():
             data = json.load(json_file)
     return render_template("home.html", filenames= filenames, metadata= data);
 
+
 @app.route('/volume', methods=["GET", "POST"])
 def volume():
-    #data = cgi.FieldStorage()
-    print('test')
 
     if request.method == 'POST':
         volume = request.form["volume"]
@@ -179,6 +180,7 @@ def volume():
     with open(app.config["MUSIC_METADATA"]) as json_file:
             data = json.load(json_file)
     return render_template("home.html", filenames= filenames, metadata= data);
+
 
 
 

@@ -6,6 +6,8 @@
 
 import sys
 import os.path
+from sense_hat import SenseHat, ACTION_PRESSED, ACTION_HELD, ACTION_RELEASED
+
 
 this = sys.modules[__name__]
 
@@ -22,6 +24,8 @@ else:
 class Player(object):
 
     def __init__(self):
+        self.sense = SenseHat()
+
         self.volume = 100
         # initially the music is OFF
         self.music_playing = False
@@ -39,7 +43,29 @@ class Player(object):
         # set an endevent to catch it
         pygame.mixer.music.set_endevent(SONG_END)
         self.music_playing = True
-        #return True
+        self.sense.clear()
+
+        #play logo
+        self.sense.set_pixel(2, 1, [0, 0, 255])
+        self.sense.set_pixel(2, 2, [0, 0, 255])
+        self.sense.set_pixel(2, 3, [0, 0, 255])
+        self.sense.set_pixel(2, 4, [0, 0, 255])
+        self.sense.set_pixel(2, 5, [0, 0, 255])
+        self.sense.set_pixel(2, 6, [0, 0, 255])
+        self.sense.set_pixel(2, 7, [0, 0, 255])
+
+        self.sense.set_pixel(3, 2, [0, 0, 255])
+        self.sense.set_pixel(3, 3, [0, 0, 255])
+        self.sense.set_pixel(3, 4, [0, 0, 255])
+        self.sense.set_pixel(3, 5, [0, 0, 255])
+        self.sense.set_pixel(3, 6, [0, 0, 255])
+
+        self.sense.set_pixel(4, 3, [0, 0, 255])
+        self.sense.set_pixel(4, 4, [0, 0, 255])
+        self.sense.set_pixel(4, 5, [0, 0, 255])
+
+        self.sense.set_pixel(5, 4, [0, 0, 255])
+
         return True
     def set_volume(self, new_volume):
         """Sets and inits new volume level"""
@@ -63,6 +89,45 @@ class Player(object):
         pygame.mixer.music.set_endevent()
         pygame.mixer.music.pause()
         self.music_playing = False
+        
+        self.sense.clear()
+
+        # pauze logo
+        self.sense.set_pixel(2, 0, [255, 0, 0])
+        self.sense.set_pixel(2, 1, [255, 0, 0])
+        self.sense.set_pixel(2, 2, [255, 0, 0])
+        self.sense.set_pixel(2, 3, [255, 0, 0])
+        self.sense.set_pixel(2, 4, [255, 0, 0])
+        self.sense.set_pixel(2, 5, [255, 0, 0])
+        self.sense.set_pixel(2, 6, [255, 0, 0])
+        self.sense.set_pixel(2, 7, [255, 0, 0])
+
+        self.sense.set_pixel(3, 0, [255, 0, 0])
+        self.sense.set_pixel(3, 1, [255, 0, 0])
+        self.sense.set_pixel(3, 2, [255, 0, 0])
+        self.sense.set_pixel(3, 3, [255, 0, 0])
+        self.sense.set_pixel(3, 4, [255, 0, 0])
+        self.sense.set_pixel(3, 5, [255, 0, 0])
+        self.sense.set_pixel(3, 6, [255, 0, 0])
+        self.sense.set_pixel(3, 7, [255, 0, 0])
+
+        self.sense.set_pixel(5, 0, [255, 0, 0])
+        self.sense.set_pixel(5, 1, [255, 0, 0])
+        self.sense.set_pixel(5, 2, [255, 0, 0])
+        self.sense.set_pixel(5, 3, [255, 0, 0])
+        self.sense.set_pixel(5, 4, [255, 0, 0])
+        self.sense.set_pixel(5, 5, [255, 0, 0])
+        self.sense.set_pixel(5, 6, [255, 0, 0])
+        self.sense.set_pixel(5, 7, [255, 0, 0])
+
+        self.sense.set_pixel(6, 0, [255, 0, 0])
+        self.sense.set_pixel(6, 1, [255, 0, 0])
+        self.sense.set_pixel(6, 2, [255, 0, 0])
+        self.sense.set_pixel(6, 3, [255, 0, 0])
+        self.sense.set_pixel(6, 4, [255, 0, 0])
+        self.sense.set_pixel(6, 5, [255, 0, 0])
+        self.sense.set_pixel(6, 6, [255, 0, 0])
+        self.sense.set_pixel(6, 7, [255, 0, 0])
         return True
 
     def start_music(self):
@@ -70,6 +135,29 @@ class Player(object):
         pygame.mixer.music.set_endevent(SONG_END)
         pygame.mixer.music.unpause()
         self.music_playing = True
+
+        self.sense.clear()
+
+        #play logo
+        self.sense.set_pixel(2, 1, [0, 0, 255])
+        self.sense.set_pixel(2, 2, [0, 0, 255])
+        self.sense.set_pixel(2, 3, [0, 0, 255])
+        self.sense.set_pixel(2, 4, [0, 0, 255])
+        self.sense.set_pixel(2, 5, [0, 0, 255])
+        self.sense.set_pixel(2, 6, [0, 0, 255])
+        self.sense.set_pixel(2, 7, [0, 0, 255])
+
+        self.sense.set_pixel(3, 2, [0, 0, 255])
+        self.sense.set_pixel(3, 3, [0, 0, 255])
+        self.sense.set_pixel(3, 4, [0, 0, 255])
+        self.sense.set_pixel(3, 5, [0, 0, 255])
+        self.sense.set_pixel(3, 6, [0, 0, 255])
+
+        self.sense.set_pixel(4, 3, [0, 0, 255])
+        self.sense.set_pixel(4, 4, [0, 0, 255])
+        self.sense.set_pixel(4, 5, [0, 0, 255])
+
+        self.sense.set_pixel(5, 4, [0, 0, 255])
         return True
 
     def get_pos(self):
