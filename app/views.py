@@ -2,6 +2,9 @@
 from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
 
+from classes.player import Player
+
+
 import os
 import pygame
 import json
@@ -10,6 +13,7 @@ import uuid
 app = Flask(__name__)
 pygame.mixer.init()
 
+PyPlayer = Player()
 
 # CONSTS
 app.config["MUSIC_UPLOADS"] = "/home/pi/Documents/IOT-Makerslab/app/static/music/uploads/"
@@ -119,12 +123,20 @@ def upload_music():
 
 @app.route('/play', methods=["GET", "POST"])
 def play_song():
-    print("busy: " + str(pygame.mixer.music.get_busy()))
+    # print("busy: " + str(pygame.mixer.music.get_busy()))
     if request.method == 'POST':
-        if pygame.mixer.music.get_busy() == 1:
-            pygame.mixer.music.queue(app.config["MUSIC_UPLOADS"] + request.form['musicfilename'])
-        else:
-            play_music(request.form['musicfilename'])
+        PyPlayer.start_next_song(app.config["MUSIC_UPLOADS"] + request.form['musicfilename'])
+
+    #     if pygame.mixer.music.get_busy() == 1:
+    #         pygame.mixer.music.set_endevent()
+    #         pygame.mixer.music.load(app.config["MUSIC_UPLOADS"] + request.form['musicfilename'])
+    #         pygame.mixer.music.play()
+    #         # set an endevent to catch it
+    #         #pygame.mixer.music.set_endevent(SONG_END)
+    #         #pygame.mixer.music.queue(app.config["MUSIC_UPLOADS"] + request.form['musicfilename'])
+    #     else:
+    #         play_music(request.form['musicfilename'])
+    #         #pygame.mixer.music.set_endevent()
 
         
     filenames = os.listdir(app.config["MUSIC_UPLOADS"])
@@ -134,7 +146,8 @@ def play_song():
 
 @app.route('/pause')
 def pause():
-    pygame.mixer.music.pause()
+    PyPlayer.stop_music()
+    #pygame.mixer.music.pause()
     
     filenames = os.listdir(app.config["MUSIC_UPLOADS"])
     with open(app.config["MUSIC_METADATA"]) as json_file:
@@ -143,12 +156,26 @@ def pause():
 
 @app.route('/unpause')
 def unpause():
-    pygame.mixer.music.unpause()
+    PyPlayer.start_music()
+    #pygame.mixer.music.unpause()
     
     filenames = os.listdir(app.config["MUSIC_UPLOADS"])
     with open(app.config["MUSIC_METADATA"]) as json_file:
             data = json.load(json_file)
     return render_template("home.html", filenames= filenames, metadata= data);
+
+
+
+@app.route('/volume')
+def volume():
+    if request.method == 'POST':
+        print(request.method)
+
+
+
+
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
 
