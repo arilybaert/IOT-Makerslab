@@ -1,6 +1,6 @@
 #
-# Author: Edelweise
-#
+# Author: Edelweise, Ari Lybaert & Arne Verleyen
+# 
 # Link: https://github.com/eidleweise/EDMC_Podcast_Player/blob/e211bd27006ebd1c659bbc40f32526631cf96098/player.py
 #
 

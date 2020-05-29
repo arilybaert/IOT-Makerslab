@@ -1,7 +1,7 @@
 # STANDARD IMPORTS
 from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
-from js.jquery import jquery
+#from js.jquery import jquery
 from classes.player import Player
 from sense_hat import SenseHat, ACTION_PRESSED, ACTION_HELD, ACTION_RELEASED
 
@@ -16,20 +16,28 @@ app = Flask(__name__)
 sense = SenseHat()
 PyPlayer = Player()
 
-jquery.need()
+#jquery.need()
 sense.clear()
 
 
-
-def pushed_up(event):
+def pushed_pause(event):
     if event.action != ACTION_RELEASED:
     	PyPlayer.stop_music()
-def pushed_down(event):
+def pushed_continue(event):
     if event.action != ACTION_RELEASED:
     	PyPlayer.start_music()
+def pushed_volume_up(event):
+    if event.action != ACTION_RELEASED:
+    	PyPlayer.set_volume(PyPlayer.get_volume()+10)
+def pushed_volume_down(event):
+    if event.action != ACTION_RELEASED:
+    	PyPlayer.set_volume(PyPlayer.get_volume()-10)
 
-sense.stick.direction_up = pushed_up
-sense.stick.direction_down = pushed_down
+sense.stick.direction_up = pushed_volume_up
+sense.stick.direction_down = pushed_volume_down
+sense.stick.direction_left = pushed_pause
+sense.stick.direction_right = pushed_continue
+
 
 
 

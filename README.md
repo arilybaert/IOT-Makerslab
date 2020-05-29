@@ -1,8 +1,6 @@
 # IOT-Makerslab
 Eindproject Internet of Things
 
-## commands on PI
-
 cd app
 
 python3 views.py
