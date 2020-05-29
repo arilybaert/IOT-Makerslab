@@ -1,7 +1,6 @@
 # STANDARD IMPORTS
 from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
-#from js.jquery import jquery
 from classes.player import Player
 from sense_hat import SenseHat, ACTION_PRESSED, ACTION_HELD, ACTION_RELEASED
 
@@ -16,7 +15,6 @@ app = Flask(__name__)
 sense = SenseHat()
 PyPlayer = Player()
 
-#jquery.need()
 sense.clear()
 
 
