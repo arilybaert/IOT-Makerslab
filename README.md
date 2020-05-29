@@ -138,13 +138,16 @@ Deze functies zorgen ervoor dat je de Sensehat op de Raspberry kan bedienen. Zo 
 Terwijl de ‘link en rechts’ toets het afspelen of pauzeren van de muziek regeelt. 
 
  
+![alt_text](images/IOT-Makerslab3.png "image_tooltip")
 
 Deze route zorgt ervoor dat als je naar de homepagina gaat van de website, je de juiste elementen te zien krijgt. Hij gaat op zoek naar de map ‘Music Uploads’ en slaagt als deze gegeven op. Vervolgens gaat hij ook op zoek naar de ‘Music Metadata’ om zo al de bijhorende gegevens van de opgeslagen liedjes. Deze 2 variabelen worden dan meegeven aan de HTML pagina zodat ze daar weergegeven kunnen worden. 
 
+![alt_text](images/IOT-Makerslab4.png "image_tooltip")
  
 
 Deze functie staat in de een Player klasse. Hier bevinden zich alle functie die bijdragen tot het afspelen van de muziek. Deze functie staat in voor het afspelen van de muziek. Hier gaat hij een nummer opladen, een standaard volume instellen en uiteraard ook het gekozen nummer afspelen.
 
+![alt_text](images/IOT-Makerslab5.png "image_tooltip")
  
 
 De upload route zorgt ervoor dat de gebruiker nummer kan opslaan op de Raspberry via zijn eigen browser.Vanaf dat de gebruiker een bestand tracht te uploaden voorziet deze functie een eigen unieke code. Deze wordt later gebruikt op het nummer aan de bijbehorende titel, artiest, ect. te koppelen. Vervolgens opent hij het ‘Metadata’ bestand en plaats hier alle nummerinformatie in. Hierna gaat hij kijken of het nummer dat de gebruiker heeft ingeladen wel voldoet aan al de vereisten. Bijvoorbeeld: voorzien van een naam, juiste extensie of niet te groot. Indien dit allemaal in orde is zal het bestand worden geplaatst in de voorziene map. 
